@@ -17,7 +17,7 @@ const loginUser=async(req, res)=>{
         const body=req.body;
         const user=await User.findOne({userName:body.userName, userPassword:body.userPassword});
         if(user){
-            res.status(200).json({msg:"User found"});
+            res.status(200).json(user);
         }
         else{
             res.status(404).json({msg:"User not found"});
