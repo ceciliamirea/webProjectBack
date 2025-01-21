@@ -63,14 +63,15 @@ const endActivity = async(req,res)=>{
 const accessActivity=async(req, res)=>{
     try{
         const {activityCode:activityCode,userId : userId} = req.params;
-       
+
         const activity=await Activity.findOne({where: {activityCode:activityCode}});
+        console.log("activity")
         if(activity){
-           
+
             if(!activity.endTime){
                 
                 const user = await User.findByPk(userId)
-                console.log(user.activitiesIds.indexOf(activity._id.toString()))
+
                 if(user && user.activitiesIds.indexOf(activity._id.toString()) == -1){
 
                     if(user.activitiesIds == undefined){
@@ -171,21 +172,6 @@ const addFeedback = async (req,res) =>{
     }
 }
 
-
-//PENTRU FEEDBACK CAND APASA PE UN SMILEY FACE SAU CV IDK
-//http://localhost:3000/api/activityFeedback    
-// await axios.patch(`http://localhost:3000/api/activityFeedback`,{
-//     activityId:"ID UL ACTIVITATIII",
-//     feedbackMsg:"FEEDBACK UL RESPECTIV ( IDK, DACA ESTE -_- => 'feedback netru'",
-
-//  })
-//     .then(res => {
-//       alert("feedback Created")
-//     })
-//     .catch(err =>{
-//       console.log(err)
-//     })
-//   }
 
 
 module.exports={createActivity, accessActivity, endActivity,getAllactivitiesForSpecificUser,getAllactivitiesForSpecificStudent,addFeedback}
