@@ -147,4 +147,45 @@ const getAllactivitiesForSpecificStudent = async (req,res)=>{
         res.status(400).json(err)
     }
 }
-module.exports={createActivity, accessActivity, endActivity,getAllactivitiesForSpecificUser,getAllactivitiesForSpecificStudent}
+
+const addFeedback = async (req,res) =>{
+    try {
+        
+        const body = req.body;
+
+        const activity=await Activity.findByPk(body.activityId);
+
+        if(activity){
+            await Activity.update(
+                { feedback: activity.feedback == "" ? body.feedbackMsg : activity.feedback+";"+body.feedbackMsg },
+                { where: { _id: body.activityId } }
+              )
+              res.status(200).json({"msg":"Feedback Added"})
+        }
+        else res.status(404).json({"msg":"No activity with this id"})
+        
+
+    } catch (err) {
+        res.status(400).json(err)
+        
+    }
+}
+
+
+//PENTRU FEEDBACK CAND APASA PE UN SMILEY FACE SAU CV IDK
+//http://localhost:3000/api/activityFeedback    
+// await axios.patch(`http://localhost:3000/api/activityFeedback`,{
+//     activityId:"ID UL ACTIVITATIII",
+//     feedbackMsg:"FEEDBACK UL RESPECTIV ( IDK, DACA ESTE -_- => 'feedback netru'",
+
+//  })
+//     .then(res => {
+//       alert("feedback Created")
+//     })
+//     .catch(err =>{
+//       console.log(err)
+//     })
+//   }
+
+
+module.exports={createActivity, accessActivity, endActivity,getAllactivitiesForSpecificUser,getAllactivitiesForSpecificStudent,addFeedback}

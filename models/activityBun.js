@@ -33,12 +33,19 @@ let Activity = sequelize.define('activity', {
     },
     createdBy : {
         type: Sequelize.STRING,
+    },
+    feedback :{
+        type : Sequelize.STRING,
+        defaultValue: ""
+
     }
    
 },{
     timestamps : false
 })
+async function ceva(){
+    await sequelize.sync({force : true})
 
-
+}
 
 module.exports = Activity
